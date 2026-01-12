@@ -10,3 +10,4 @@ httpcore>=0.14.0
 requests>=2.31.0         # For calling external APIs
 tiktoken>=0.4.0          # Tokenization for OpenAI models
 rich>=13.3.0             # Nice CLI output
+psutil==5.9.5             # track memory usage

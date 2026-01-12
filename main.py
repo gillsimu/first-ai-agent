@@ -1,18 +1,30 @@
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
+from agent.memory import Memory
+from agent.agent import Agent
+import logging
+# Suppress console printing for httpx/urllib3
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
+
+# Load environment
 load_dotenv()
-# Make sure the environment variable is set
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-# Use OpenAI client WITHOUT arguments
+# Initialize OpenAI client
 client = OpenAI()
 
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[{"role":"user","content":"Hello!"}]
-)
+# Initialize memory & agent
+memory = Memory(client=client, token_limit=25)
+agent = Agent(client, memory)
 
-print(response.choices[0].message.content)
-breakpoint()
+print("AI Agent is ready! Type 'exit' to quit.")
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() in ["exit", "quit"]:
+        break
+    reply = agent.ask(user_input)
+    print("Agent:", reply)
