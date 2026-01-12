@@ -18,7 +18,7 @@ client = OpenAI()
 
 # Initialize memory & agent
 memory = Memory(client=client, token_limit=25)
-agent = Agent(client, memory)
+agent = Agent(client, memory, model="gpt-4o-mini")
 
 print("AI Agent is ready! Type 'exit' to quit.")
 
