@@ -1,0 +1,12 @@
+# Core packages
+openai>=1.0.0
+python-dotenv
+
+# HTTP client required by the OpenAI client
+httpx>=0.24.0
+httpcore>=0.14.0
+
+# Optional / Useful for AI agent extensions
+requests>=2.31.0         # For calling external APIs
+tiktoken>=0.4.0          # Tokenization for OpenAI models
+rich>=13.3.0             # Nice CLI output
