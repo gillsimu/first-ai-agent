@@ -39,3 +39,15 @@ OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```bash
 python main.py
 ```
+
+6. Run the test harness:
+```bash
+python -m unittest tests/test_harness.py
+```
+
+The harness runs offline and confirms the orchestrator routes math to the calculator tool and factual questions to the search tool.
+
+7. Run the demo script:
+```bash
+python main.py --demo
+```

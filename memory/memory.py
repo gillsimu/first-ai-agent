@@ -52,6 +52,18 @@ class Memory:
             log_debug(f"[X] Message pruned: {removed}")
             pruned_messages.append(removed)
             memory_pruned = True
+            # If we removed a tool call context, drop associated tool outputs too
+            if removed.get("role") == "assistant" and removed.get("tool_calls"):
+                while self.chat_history and self.chat_history[0].get("role") == "tool":
+                    removed_tool = self.chat_history.pop(0)
+                    log_debug(f"[X] Tool message pruned: {removed_tool}")
+                    pruned_messages.append(removed_tool)
+            # If we removed a tool message, drop any subsequent tool messages to avoid orphans
+            if removed.get("role") == "tool":
+                while self.chat_history and self.chat_history[0].get("role") == "tool":
+                    removed_tool = self.chat_history.pop(0)
+                    log_debug(f"[X] Tool message pruned: {removed_tool}")
+                    pruned_messages.append(removed_tool)
 
         if memory_pruned and pruned_messages:
             # Build content safely for summarization

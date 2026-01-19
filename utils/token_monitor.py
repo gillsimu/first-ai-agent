@@ -11,6 +11,7 @@ def count_tokens(messages):
     total_tokens = 0
     for m in messages:
         total_tokens += len(ENCODER.encode(m["role"]))  # Role token
-        total_tokens += len(ENCODER.encode(m["content"]))  # Content token
+        content = m.get("content") or ""
+        total_tokens += len(ENCODER.encode(content))  # Content token
     log_debug(f"Total tokens in conversation: {total_tokens}")
     return total_tokens
